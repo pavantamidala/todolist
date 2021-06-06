@@ -1,5 +1,6 @@
 <div class="container">
   <div *ngIf="showForm" class="modal">
+    <div class="form-container">
     <form #form="ngForm" (ngSubmit)="clickHandle(form)">
       <label for="description">Todo:</label>
       <textarea
@@ -15,9 +16,12 @@
         rows="5"
       ></textarea>
       <br />
-      <button class="addtodo-btn" type="submit">Add</button>
-      <button (click)="closeForm()">Close</button>
+      <div class="modal-buttons">
+        <button class="addtodo-btn" type="submit">Add</button>
+        <button (click)="closeForm()">Close</button>
+      </div>
     </form>
+    </div>
   </div>
 
   <div class="box">
