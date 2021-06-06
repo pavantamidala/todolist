@@ -90,13 +90,17 @@ export class FormComponent implements OnInit {
     this.todo.description = '';
   }
   openForm() {
+    // this.clearFormValues()
     this.showForm = true;
   }
   closeForm() {
+    this.todo.description = ""
     this.showForm = false;
+    this.edited = false;
   }
   today = new Date()
   editHandle(id: number) {
+    debugger
     const editedTodo = this.allTodos.find((obj: any, index: number) => {
       this.currentIndex = index;
       return obj.id === id;
