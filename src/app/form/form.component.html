@@ -26,7 +26,7 @@
       <button (click)="openForm()">NewTodo</button>
     
       <div class="search">
-        <input placeholder="Search here..." type="text" id="search" class="search" />
+        <input #search placeholder="Search here..." [ngModel]="searchString" (ngModelChange)="searchChangeEvent(search)" type="text" id="search" class="search" />
       </div>
     </div>
     <div [class.overflow]="allTodos.length >= 8" class="todo-container">
@@ -48,6 +48,8 @@
         <p [class.strike-through]="todo.completed" class="todo-description">
           {{ todo.description }}
         </p>
+        <span> {{todo.date | date:'short'}} </span>
+        
         <div class="todo-buttons">
           <button
            
@@ -67,15 +69,19 @@
         </div>
       </div>
     </div>
-   <div class="pagination">
+   <div *ngIf="showPagination" class="pagination">
         <form #Number="ngForm"    (ngSubmit)="changedPaginationNumber(Number.value.paginationNumber,Number)">
-            <input  min="1" #pagination="ngModel" required type="number" [(ngModel)]="paginationNumber" name="paginationNumber" class="input-bar" >
+          <label for="pagination"> Per Page:</label>
+            <input id="pagination" min="1" #pagination="ngModel" required type="number" [(ngModel)]="paginationNumber" name="paginationNumber" class="input-bar" >
             <button type="submit">Submit</button>
             <div *ngIf="pagination.touched && pagination.invalid"> Zero is not valid </div>
         </form>
-        <select #select [(ngModel)]="selectedValue" (change)="selectChangeEvent(select.value)" name="pagination" id="">
+        <div>
+          <label for="select"> Current Page: </label>
+          <select #select id="select" [(ngModel)]="selectedValue" (change)="selectChangeEvent(select.value)" name="pagination" id="">
             <option [value]="num" *ngFor="let num of optionsArray;" > {{num}} </option>
-        </select>
+          </select>
+        </div>
    </div>
   </div>
 </div>

@@ -15,16 +15,19 @@ export class FormComponent implements OnInit {
   showButtons = false;
   paginationNumber = 10;
   numberOfOptions = 0;
-  optionsArray:any = [];
-  displayedTodos :any;
-  selectedValue:any;
+  optionsArray: any = [];
+  displayedTodos: any;
+  selectedValue: any;
+  searchString:any;
+  showPagination = true;
   constructor() {}
 
   ngOnInit() {
     this.setInitialLocalStorageData();
     this.getLocalStorageData();
-    this.initializePagination(this.paginationNumber)
-    this.selectChangeEvent(1)
+    this.initializePagination(this.paginationNumber);
+    this.selectChangeEvent(1);
+    this.selectedValue = 1;
   }
   setInitialLocalStorageData() {
     const response = localStorage.getItem('allTodosArray');
@@ -48,6 +51,7 @@ export class FormComponent implements OnInit {
   };
   date = new Date();
   clickHandle(form: NgForm) {
+    // debugger;
     if (form.valid) {
       if (this.edited) {
         this.saveEditedTodo(form);
@@ -56,9 +60,9 @@ export class FormComponent implements OnInit {
       }
 
       this.showValidations = false;
-      this.displayedTodos = this.allTodos
-      // this.setPagination(this.selectedValue)
-      this.initializePagination(this.paginationNumber)
+      this.initializePagination(this.paginationNumber);
+      this.selectChangeEvent(this.optionsArray.length);
+      this.selectedValue = this.optionsArray.length;
       this.clearFormValues(form);
       this.closeForm();
     } else {
@@ -71,11 +75,11 @@ export class FormComponent implements OnInit {
     this.setDataToLocalStorage();
     this.edited = false;
   }
+  
   attachDetails(form: NgForm) {
     form.value.completed = false;
     form.value.id = this.date.getMilliseconds() + Math.random();
-    form.value.date = this.date.toLocaleDateString();
-    form.value.time = this.date.toLocaleTimeString();
+    form.value.date = this.date
   }
   saveTodo(form: NgForm) {
     this.attachDetails(form);
@@ -91,6 +95,7 @@ export class FormComponent implements OnInit {
   closeForm() {
     this.showForm = false;
   }
+  today = new Date()
   editHandle(id: number) {
     const editedTodo = this.allTodos.find((obj: any, index: number) => {
       this.currentIndex = index;
@@ -108,10 +113,10 @@ export class FormComponent implements OnInit {
     this.displayedTodos = this.displayedTodos.filter((obj: any) => {
       return obj.id !== id;
     });
-    this.initializePagination(this.paginationNumber)
+    this.initializePagination(this.paginationNumber);
     this.setDataToLocalStorage();
   }
- 
+
   changedCheckBox(e: any, id: number) {
     let value = e.target.checked;
     let index = 0;
@@ -128,49 +133,64 @@ export class FormComponent implements OnInit {
     this.setDataToLocalStorage();
   }
 
-  changedPaginationNumber(num:any,form?:any){
-    // debugger
-    if(form.valid){
-      this.paginationNumber = Number(num)
-      this.numberOfOptions = Math.ceil(this.allTodos.length/this.paginationNumber)
-      // this.allTodos = this.allTodos.slice(0,this.paginationNumber)
-      this.optionsArray =  this.dynamicNoOfOptions(this.numberOfOptions)
-      this.selectChangeEvent(1)
-      this.selectedValue = 1
+  changedPaginationNumber(num: any, form?: any) {
+    // debugger;
+    if (form.valid) {
+      this.basePagination(num);
+      this.selectChangeEvent(1);
+      this.selectedValue = 1;
     }
   }
 
-  initializePagination(num:any){
+  basePagination(num: any) {
+    // debugger;
     this.paginationNumber = Number(num);
     this.numberOfOptions = Math.ceil(
       this.allTodos.length / this.paginationNumber
     );
-    // this.allTodos = this.allTodos.slice(0,this.paginationNumber)
     this.optionsArray = this.dynamicNoOfOptions(this.numberOfOptions);
-    this.selectChangeEvent(1);
-    this.selectedValue = 1;
   }
 
-  dynamicNoOfOptions(number:any):Array<number>{
-    let arr = []
-    for(let i=1;i<=number;i++){
-      arr.push(i)
+  initializePagination(num: any) {
+    // debugger;
+    this.basePagination(num);
+  }
+
+  dynamicNoOfOptions(number: any): Array<number> {
+    let arr = [];
+    for (let i = 1; i <= number; i++) {
+      arr.push(i);
     }
-    return arr
+    return arr;
   }
-  selectChangeEvent(e:any){
-    // debugger
-    let value= Number(e)
-    if(value === 1){
-       this.displayedTodos = this.allTodos.slice(0,this.paginationNumber)
-    }else{
-      this.setPagination(value)
+  selectChangeEvent(e: any) {
+    // debugger;
+    let value = Number(e);
+    if (value === 1) {
+      this.displayedTodos = this.allTodos.slice(0, this.paginationNumber);
+    } else {
+      this.setPagination(value);
     }
   }
-  setPagination(value:number){
-      this.displayedTodos = this.allTodos.slice(
-        (value - 1) * this.paginationNumber,
-        value * this.paginationNumber
-      );
+  setPagination(value: number) {
+    // debugger;
+    this.displayedTodos = this.allTodos.slice(
+      (value - 1) * this.paginationNumber,
+      value * this.paginationNumber
+    );
   }
+  searchChangeEvent(e:any){
+  // debugger
+  this.searchString = e.value
+  if(this.searchString){
+    this.displayedTodos = this.allTodos.filter((obj:any) => {
+      return obj.description.includes(this.searchString);
+    });
+    this.showPagination = false
+  }else{
+    this.initializePagination(this.paginationNumber)
+    this.selectChangeEvent(this.selectedValue)
+    this.showPagination = true
+  }
+}
 }

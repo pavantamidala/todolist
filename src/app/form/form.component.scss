@@ -67,12 +67,15 @@
     .heading {
           // justify-self: center;
           display: grid;
-          grid-template-columns: 2fr 1fr 0.5fr;
+          grid-template-columns: 2fr 1fr 1fr 0.4fr;
           grid-template-rows: 25px;
           grid-auto-flow: column;
           width: 100%;
           // min-width: 300px;
         max-width: 448px;
+        p{
+          @include grid-self-center();
+        }
           h3 {
             margin: 0;
           }
@@ -106,12 +109,18 @@
       max-width: 497px;
       .todo {
         display: grid;
-        grid-template-columns: 20px 3fr 1fr;
+        grid-template-columns: 20px 2fr 1.5fr 1fr;
         border-top: 1px solid skyblue;
         grid-template-rows: repeat(auto-fit, minmax(35px, 35px));
         width: 100%;
         max-width: 600px;
         // min-width: 448.375px;
+        span{
+          @include grid-self-center();
+          color:gray;
+          font-size: 13px;
+          justify-self: flex-end;
+        }
         input {
           width: fit-content;
           align-self: center;
@@ -145,7 +154,10 @@
       form{
         input{
           width: 35px;
-          // margin: 10px;
+           margin-right: 10px;
+        }
+        button{
+          margin-right: 20px;
         }
       }
       select{
