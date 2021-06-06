@@ -72,6 +72,9 @@
           </button>
         </div>
       </div>
+      <div *ngIf="displayedTodos.length===0">
+        <h1> Empty here add one </h1>
+      </div>
     </div>
    <div *ngIf="showPagination" class="pagination">
         <form #Number="ngForm"    (ngSubmit)="changedPaginationNumber(Number.value.paginationNumber,Number)">
