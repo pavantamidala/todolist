@@ -1,26 +1,28 @@
 <div class="container">
   <div *ngIf="showForm" class="modal">
     <div class="form-container">
-    <form #form="ngForm" (ngSubmit)="clickHandle(form)">
-      <label for="description">Todo:</label>
-      <textarea
-        [class.alert]="form.submitted && description.invalid && showValidations"
-        #description="ngModel"
-        name="description"
-        placeholder="Write a note here..."
-        [(ngModel)]="todo.description"
-        id="description"
-        required
-        class="description-field"
-        cols="22"
-        rows="5"
-      ></textarea>
-      <br />
-      <div class="modal-buttons">
-        <button class="addtodo-btn" type="submit">Add</button>
-        <button (click)="closeForm()">Close</button>
-      </div>
-    </form>
+      <form #form="ngForm" (ngSubmit)="clickHandle(form)">
+        <label for="description">Todo:</label>
+        <textarea
+          [class.alert]="
+            form.submitted && description.invalid && showValidations
+          "
+          #description="ngModel"
+          name="description"
+          placeholder="Write a note here..."
+          [(ngModel)]="todo.description"
+          id="description"
+          required
+          class="description-field"
+          cols="22"
+          rows="5"
+        ></textarea>
+        <br />
+        <div class="modal-buttons">
+          <button class="addtodo-btn" type="submit">Add</button>
+          <button (click)="closeForm()">Close</button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -28,13 +30,20 @@
     <div class="heading">
       <h3>All Todos</h3>
       <button (click)="openForm()">NewTodo</button>
-    
+
       <div class="search">
-        <input #search placeholder="Search here..." [ngModel]="searchString" (ngModelChange)="searchStringChangeEvent(search)" type="text" id="search" class="search" />
+        <input
+          #search
+          placeholder="Search here..."
+          [ngModel]="searchString"
+          (ngModelChange)="searchStringChangeEvent(search)"
+          type="text"
+          id="search"
+          class="search"
+        />
       </div>
     </div>
     <div [class.overflow]="allTodos.length >= 8" class="todo-container">
-        
       <div
         class="todo"
         [class.reduce-opacity]="todo.completed"
@@ -52,15 +61,10 @@
         <p [class.strike-through]="todo.completed" class="todo-description">
           {{ todo.description }}
         </p>
-        <span> {{todo.date | date:'short'}} </span>
-        
+        <span> {{ todo.date | date: "short" }} </span>
+
         <div class="todo-buttons">
-          <button
-           
-            class="todo-edit"
-            (click)="editHandle(todo.id)"
-            type="submit"
-          >
+          <button class="todo-edit" (click)="editHandle(todo.id)" type="submit">
             Edit
           </button>
           <button
@@ -72,23 +76,48 @@
           </button>
         </div>
       </div>
-      <div *ngIf="displayTodos.length===0">
-        <h1> Empty here add one </h1>
+      <div *ngIf="displayTodos.length === 0">
+        <h1>Empty here add one</h1>
       </div>
     </div>
-   <div *ngIf="showPagination" class="pagination">
-        <form #Number="ngForm"    (ngSubmit)="changedPaginationNumber(Number.value.paginationNumber,Number)">
-          <label for="pagination"> Per Page:</label>
-            <input id="pagination" min="1" #pagination="ngModel" required type="number" [(ngModel)]="paginationNumber" name="paginationNumber" class="input-bar" >
-            <button type="submit">Submit</button>
-            <div *ngIf="pagination.touched && pagination.invalid"> Zero is not valid </div>
-        </form>
-        <div>
-          <label for="select"> Current Page: </label>
-          <select #select id="select" [(ngModel)]="dropdownSelectedValue" (change)="selectDropdownChangeEvent(select.value)" name="pagination" id="">
-            <option [value]="num" *ngFor="let num of optionsArray;" > {{num}} </option>
-          </select>
+    <div *ngIf="showPagination" class="pagination">
+      <form
+        #Number="ngForm"
+        (ngSubmit)="
+          changedPaginationNumber(Number.value.paginationNumber, Number)
+        "
+      >
+        <label for="pagination"> Per Page:</label>
+        <input
+          id="pagination"
+          min="1"
+          #pagination="ngModel"
+          required
+          type="number"
+          [(ngModel)]="paginationNumber"
+          name="paginationNumber"
+          class="input-bar"
+        />
+        <button type="submit">Submit</button>
+        <div *ngIf="pagination.touched && pagination.invalid">
+          Zero is not valid
         </div>
-   </div>
+      </form>
+      <div>
+        <label for="select"> Current Page: </label>
+        <select
+          #select
+          id="select"
+          [(ngModel)]="dropdownSelectedValue"
+          (change)="selectDropdownChangeEvent(select.value)"
+          name="pagination"
+          id=""
+        >
+          <option [value]="num" *ngFor="let num of optionsArray">
+            {{ num }}
+          </option>
+        </select>
+      </div>
+    </div>
   </div>
 </div>

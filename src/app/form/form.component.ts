@@ -15,10 +15,12 @@ export class FormComponent implements OnInit {
   showButtons = false;
   paginationNumber = 10;
   optionsArray: any = [];
-  displayTodos: any = []
+  displayTodos: any = [];
   dropdownSelectedValue: any;
-  searchString:any;
+  searchString: any;
   showPagination = true;
+  today = new Date();
+
   constructor() {}
 
   ngOnInit() {
@@ -27,7 +29,8 @@ export class FormComponent implements OnInit {
     this.initializePagination(this.paginationNumber);
     this.selectDropdownChangeEvent(1);
     this.dropdownSelectedValue = 1;
-  } 
+  }
+
   setInitialLocalStorageData() {
     const response = localStorage.getItem('allTodosArray');
     if (response === null) {
@@ -45,9 +48,11 @@ export class FormComponent implements OnInit {
       this.allTodos = JSON.parse(response);
     }
   }
+
   todo = {
     description: '',
   };
+
   date = new Date();
   clickHandle(form: NgForm) {
     debugger;
@@ -55,7 +60,7 @@ export class FormComponent implements OnInit {
       if (this.edited) {
         this.saveEditedTodo(form);
         this.initializePagination(this.paginationNumber);
-        this.selectDropdownChangeEvent(this.dropdownSelectedValue)
+        this.selectDropdownChangeEvent(this.dropdownSelectedValue);
         this.dropdownSelectedValue = this.dropdownSelectedValue;
         this.clearFormValues(form);
         this.showValidations = false;
@@ -64,7 +69,6 @@ export class FormComponent implements OnInit {
       } else {
         this.saveTodo(form);
       }
-
       this.showValidations = false;
       this.initializePagination(this.paginationNumber);
       this.selectDropdownChangeEvent(this.optionsArray.length);
@@ -75,18 +79,20 @@ export class FormComponent implements OnInit {
       this.showValidations = true;
     }
   }
+
   saveEditedTodo(form: NgForm) {
     this.attachDetails(form);
     this.allTodos.splice(this.editedTodoIndex, 1, form.value);
     this.setDataToLocalStorage();
     this.edited = false;
   }
-  
+
   attachDetails(form: NgForm) {
     form.value.completed = false;
     form.value.id = this.date.getMilliseconds() + Math.random();
-    form.value.date = this.date
+    form.value.date = this.date;
   }
+
   saveTodo(form: NgForm) {
     this.attachDetails(form);
     this.allTodos.push(form.value);
@@ -95,18 +101,18 @@ export class FormComponent implements OnInit {
   clearFormValues(form: NgForm) {
     this.todo.description = '';
   }
+
   openForm() {
-    // this.clearFormValues()
     this.showForm = true;
   }
+
   closeForm() {
-    this.todo.description = ""
+    this.todo.description = '';
     this.showForm = false;
     this.edited = false;
   }
-  today = new Date()
+
   editHandle(id: number) {
-    debugger
     const editedTodo = this.allTodos.find((obj: any, index: number) => {
       this.editedTodoIndex = index;
       return obj.id === id;
@@ -115,8 +121,8 @@ export class FormComponent implements OnInit {
     this.openForm();
     this.edited = true;
   }
+
   deleteHandle(id: number) {
-    // debugger;
     this.allTodos = this.allTodos.filter((obj: any) => {
       return obj.id !== id;
     });
@@ -144,7 +150,6 @@ export class FormComponent implements OnInit {
   }
 
   changedPaginationNumber(num: any, form?: any) {
-    debugger;
     if (form.valid) {
       this.basePagination(num);
       this.selectDropdownChangeEvent(1);
@@ -153,16 +158,12 @@ export class FormComponent implements OnInit {
   }
 
   basePagination(num: any) {
-    // debugger;
     this.paginationNumber = Number(num);
-    let totalOptions = Math.ceil(
-      this.allTodos.length / this.paginationNumber
-    );
+    let totalOptions = Math.ceil(this.allTodos.length / this.paginationNumber);
     this.optionsArray = this.noOfOptionsForSelectDropdown(totalOptions);
   }
 
   initializePagination(num: any) {
-    // debugger;
     this.basePagination(num);
   }
 
@@ -174,7 +175,6 @@ export class FormComponent implements OnInit {
     return arr;
   }
   selectDropdownChangeEvent(e: any) {
-    // debugger;
     let value = Number(e);
     if (value === 1) {
       this.displayTodos = this.allTodos.slice(0, this.paginationNumber);
@@ -183,24 +183,22 @@ export class FormComponent implements OnInit {
     }
   }
   setPagination(value: number) {
-    // debugger;
     this.displayTodos = this.allTodos.slice(
       (value - 1) * this.paginationNumber,
       value * this.paginationNumber
     );
   }
-  searchStringChangeEvent(e:any){
-  // debugger
-  this.searchString = e.value
-  if(this.searchString){
-    this.displayTodos = this.allTodos.filter((obj:any) => {
-      return obj.description.includes(this.searchString);
-    });
-    this.showPagination = false
-  }else{
-    this.initializePagination(this.paginationNumber)
-    this.selectDropdownChangeEvent(this.dropdownSelectedValue)
-    this.showPagination = true
+  searchStringChangeEvent(e: any) {
+    this.searchString = e.value;
+    if (this.searchString) {
+      this.displayTodos = this.allTodos.filter((obj: any) => {
+        return obj.description.includes(this.searchString);
+      });
+      this.showPagination = false;
+    } else {
+      this.initializePagination(this.paginationNumber);
+      this.selectDropdownChangeEvent(this.dropdownSelectedValue);
+      this.showPagination = true;
+    }
   }
-}
 }

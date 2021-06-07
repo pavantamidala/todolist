@@ -7,22 +7,22 @@
   justify-self: center;
 }
 @mixin base-button {
-    border: none;
-    background-color:skyblue;
-    color: black;
-    // text-decoration: ;
-    border-radius: 10%;
-    cursor: pointer;
-    padding: 5px;
+  border: none;
+  background-color: skyblue;
+  color: black;
+  // text-decoration: ;
+  border-radius: 10%;
+  cursor: pointer;
+  padding: 5px;
 }
 .alert {
   border: 1px solid red;
 }
-.reduce-opacity{
-    opacity: 0.5;
+.reduce-opacity {
+  opacity: 0.5;
 }
-.strike-through{
-    text-decoration: line-through;
+.strike-through {
+  text-decoration: line-through;
 }
 // label,
 // .addtodo-btn {
@@ -31,7 +31,7 @@
 .container {
   height: 100%;
   position: relative;
-  top:10%;
+  top: 10%;
   .modal {
     position: fixed;
     top: 0;
@@ -43,7 +43,7 @@
     display: grid;
     align-items: center;
     justify-content: center;
-    .form-container{
+    .form-container {
       width: 230px;
       height: 160px;
       background-color: skyblue;
@@ -54,18 +54,17 @@
       border: 1px solid gray;
     }
     form {
-     width: 177px;
-     height: 138px;
+      width: 177px;
+      height: 138px;
       label {
         font-size: larger;
         display: block;
       }
-      .modal-buttons{
+      .modal-buttons {
         display: flex;
         margin-top: 10px;
         justify-content: space-around;
       }
-      
     }
   }
   .box {
@@ -78,51 +77,50 @@
     align-items: center;
     min-height: 60vh;
     .heading {
-          // justify-self: center;
-          display: grid;
-          grid-template-columns: 2fr 1fr 1fr 1fr;
-          grid-template-rows: 25px;
-          grid-auto-flow: column;
-          width: 100%;
-          // min-width: 300px;
-        max-width: 448px;
-        p{
-          @include grid-self-center();
+      // justify-self: center;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      grid-template-rows: 25px;
+      grid-auto-flow: column;
+      width: 100%;
+      // min-width: 300px;
+      max-width: 448px;
+      p {
+        @include grid-self-center();
+      }
+      h3 {
+        margin: 0;
+      }
+      button {
+        @include fitcontent();
+        @include grid-self-center();
+        @include base-button();
+        grid-column-start: 2;
+        padding: 3px;
+        width: 100px;
+        border-radius: 3px;
+        height: 23px;
+        grid-column-start: -2;
+      }
+      div {
+        grid-column: -1/-1;
+        text-align: end;
+        margin-left: 5px;
+        label,
+        input {
+          width: 90px;
         }
-          h3 {
-            margin: 0;
-          }
-          button {
-            @include fitcontent();
-            @include grid-self-center();
-            @include base-button();
-            grid-column-start: 2;
-            padding: 3px;
-            width: 100px;
-            border-radius: 3px;
-            height: 23px;
-            grid-column-start: -2;
-          }
-          div {
-            grid-column:-1/-1;
-              text-align: end;
-              margin-left: 5px;
-            label,
-            input {
-              width: 90px;
-            }
-            input {
-              border: none;
-              border-bottom: 1px solid black;
-            }
-            input:focus {
-              outline: none;
-              //    outline-bottom: 1px solid black;
-            }
-          }
+        input {
+          border: none;
+          border-bottom: 1px solid black;
         }
+        input:focus {
+          outline: none;
+          //    outline-bottom: 1px solid black;
+        }
+      }
+    }
     .todo-container {
-        
       height: 65vh;
       min-width: 300px;
       max-width: 497px;
@@ -134,9 +132,9 @@
         width: 100%;
         max-width: 600px;
         // min-width: 448.375px;
-        span{
+        span {
           @include grid-self-center();
-          color:gray;
+          color: gray;
           font-size: 13px;
           justify-self: flex-end;
         }
@@ -155,7 +153,7 @@
             @include fitcontent();
             @include grid-self-center();
             @include base-button();
-            background-color: rgb(137, 240, 137)
+            background-color: rgb(137, 240, 137);
           }
           .todo-delete {
             @include fitcontent();
@@ -166,23 +164,20 @@
         }
       }
     }
-    .pagination{
+    .pagination {
       display: grid;
       grid-template-columns: 1fr 1fr;
       max-width: 448px;
-    grid-row-end: 4;
-    align-self: flex-end;
-      form{
-        input{
+      grid-row-end: 4;
+      align-self: flex-end;
+      form {
+        input {
           width: 35px;
-           margin-right: 10px;
+          margin-right: 10px;
         }
-        button{
+        button {
           margin-right: 20px;
         }
-      }
-      select{
-
       }
     }
   }
