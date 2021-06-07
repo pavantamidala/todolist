@@ -30,7 +30,7 @@
       <button (click)="openForm()">NewTodo</button>
     
       <div class="search">
-        <input #search placeholder="Search here..." [ngModel]="searchString" (ngModelChange)="searchChangeEvent(search)" type="text" id="search" class="search" />
+        <input #search placeholder="Search here..." [ngModel]="searchString" (ngModelChange)="searchStringChangeEvent(search)" type="text" id="search" class="search" />
       </div>
     </div>
     <div [class.overflow]="allTodos.length >= 8" class="todo-container">
@@ -38,7 +38,7 @@
       <div
         class="todo"
         [class.reduce-opacity]="todo.completed"
-        *ngFor="let todo of displayedTodos"
+        *ngFor="let todo of displayTodos"
         id="todo.id"
       >
         <input
@@ -72,7 +72,7 @@
           </button>
         </div>
       </div>
-      <div *ngIf="displayedTodos.length===0">
+      <div *ngIf="displayTodos.length===0">
         <h1> Empty here add one </h1>
       </div>
     </div>
@@ -85,7 +85,7 @@
         </form>
         <div>
           <label for="select"> Current Page: </label>
-          <select #select id="select" [(ngModel)]="selectedValue" (change)="selectChangeEvent(select.value)" name="pagination" id="">
+          <select #select id="select" [(ngModel)]="dropdownSelectedValue" (change)="selectDropdownChangeEvent(select.value)" name="pagination" id="">
             <option [value]="num" *ngFor="let num of optionsArray;" > {{num}} </option>
           </select>
         </div>
