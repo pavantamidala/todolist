@@ -174,6 +174,7 @@ export class FormComponent implements OnInit {
     }
     return arr;
   }
+
   selectDropdownChangeEvent(e: any) {
     let value = Number(e);
     if (value === 1) {
@@ -182,12 +183,14 @@ export class FormComponent implements OnInit {
       this.setPagination(value);
     }
   }
+
   setPagination(value: number) {
     this.displayTodos = this.allTodos.slice(
       (value - 1) * this.paginationNumber,
       value * this.paginationNumber
     );
   }
+  
   searchStringChangeEvent(e: any) {
     this.searchString = e.value;
     if (this.searchString) {
